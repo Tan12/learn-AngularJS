@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>angularJS test</title>
+  <script src="angular-1.4.1/angular.min.js"></script>
+</head>
+<body ng-app="myApp">
+  <div ng-controller="myNoteCtrl">
+    <h2>My Note</h2>
+    <p><textarea ng-model="message" cols="40" rows="10"></textarea></p>
+    <p>
+      <button ng-click="save()">save</button>
+      <button ng-click="clear()">clear</button>
+    </p>
+    <p>Number of characters left: <span ng-bind="left()"></span></p>
+  </div>
+
+  <script src="noteApp.js"></script>
+  <script src="noteCtrl.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>route test</title>
+  <script src="../angular-1.4.1/angular.min.js"></script>
+  <script src="../angular-1.4.1/angular-route.min.js"></script>
+</head>
+<body ng-app="myApp">
+  <div ng-controller="textCtrl"></div>
+  <div ng-view></div>
+
+  <script>
+    var app = angular.module('myApp',['ngRoute']),
+        messages = [
+          {id: 0, sender: "123456@qq.com", subject: "你好，这是一封邮件", date: "2015年4月13日", recipients: ['wifei@163.com'], message: "你好，我是xxx，这是发送给您的邮件。"},
+          {id: 1, sender: "123456@qq.com", subject: "你好，这是一封邮件", date: "2015年4月13日", recipients: ['wifei@163.com'], message: "你好，我是xxx，这是发送给您的邮件。"},
+          {id: 2, sender: "123456@qq.com", subject: "你好，这是一封邮件", date: "2015年4月13日", recipients: ['wifei@163.com'], message: "你好，我是xxx，这是发送给您的邮件。"}
+        ];
+    app.controller('textCtrl', function($scope){
+      $scope.someText = "test content";
+    });
+    //route
+    function emailRouteConfig($routeProvider){
+      $routeProvider.
+      when('/', {
+        controller : listController,
+        templateUrl : 'list.html'
+      }).
+      when('/view/:id', {////在id前面加一个冒号，从而制订了一个参数化URL
+        controller : detailController,
+        templateUrl : 'detail.html'
+      }).
+      otherwise({
+        redirectTo : '/'
+      });
+    }
+    app.config(emailRouteConfig);//配置我们的路由
+    function listController($scope){
+      $scope.messages = messages;
+    }
+    function detailController($scope, $routeParams){
+      $scope.message = messages[$routeParams.id];
+    }
+  </script>
+</body>
+</html>
