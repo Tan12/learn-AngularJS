@@ -7,15 +7,15 @@
   <script src="../angular-1.4.1/angular-route.min.js"></script>
 </head>
 <body ng-app="myApp">
-  <div ng-controller="textCtrl"></div>
+  <div ng-controller="textCtrl">{{someText}}</div>
   <div ng-view></div>
 
   <script>
     var app = angular.module('myApp',['ngRoute']),
         messages = [
-          {id: 0, sender: "123456@qq.com", subject: "你好，这是一封邮件", date: "2015年4月13日", recipients: ['wifei@163.com'], message: "你好，我是xxx，这是发送给您的邮件。"},
-          {id: 1, sender: "123456@qq.com", subject: "你好，这是一封邮件", date: "2015年4月13日", recipients: ['wifei@163.com'], message: "你好，我是xxx，这是发送给您的邮件。"},
-          {id: 2, sender: "123456@qq.com", subject: "你好，这是一封邮件", date: "2015年4月13日", recipients: ['wifei@163.com'], message: "你好，我是xxx，这是发送给您的邮件。"}
+          {id: 0, sender: "123456@qq.com", subject: "你好，这是一封邮件", date: "2016年11月12日", recipients: ['abc@163.com'], message: "你好，我是xxx，这是发送给您的邮件。"},
+          {id: 1, sender: "123456@qq.com", subject: "你好，这是一封邮件", date: "2016年11月12日", recipients: ['abc@163.com'], message: "你好，我是xxx，这是发送给您的邮件。"},
+          {id: 2, sender: "123456@qq.com", subject: "你好，这是一封邮件", date: "2016年11月12日", recipients: ['abc@163.com'], message: "你好，我是xxx，这是发送给您的邮件。"}
         ];
     app.controller('textCtrl', function($scope){
       $scope.someText = "test content";

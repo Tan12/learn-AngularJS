@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>toggle menu</title>
+  <script src="../angular-1.4.1/angular.min.js"></script>
+  <script src="../angular-1.4.1/angular-route.min.js"></script>
+  <style>
+    *{
+      font-size:12px;
+      font-family:'MICROSOFT YAHEI';
+      color:#005580;
+    }
+    .submenu span {
+      border:1px solid #EFEFEF;
+      background:#F7F7F7;
+      padding:4px 8px;
+      cursor:pointer
+    }
+    .submenu ul li{
+      color:#169FE7
+    }
+
+  </style>
+</head>
+<body ng-app="myApp">
+  <div ng-controller="subMenu">
+    <expender>
+      <li ng-repeat="list in lists">{{list}}</li>
+    </expender>
+  </div>
+
+  <script>
+    var lists = ['服饰','箱包','美妆','生活','家装'],
+        app = angular.module('myApp', []);
+    app.directive('expender', function(){
+      return {
+        restrict : "EA",
+        replace : true,
+        templateUrl : "submenu.html",
+        transclude : true,
+        link : function(scope,element,attr){
+          scope.toggle=function(){
+              scope.ifShow = !scope.ifShow;
+              scope.text = scope.ifShow ? '点击收起' :'点击展开';
+          }
+        }
+      }
+    });
+    app.controller('subMenu', ['$scope', function($scope){
+      $scope.text = '点击展开';
+      $scope.lists = lists;
+    }]);
+  </script>
+
+  <script type="text/ng-template" id="submenu.html">
+    <div>
+      <span ng-click="toggle()">{{text}}</span>
+      <ul ng-transclude ng-show="ifShow"></ul>
+    </div>
+  </script>
+</body>
+</html>
