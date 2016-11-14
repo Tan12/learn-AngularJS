@@ -32,9 +32,14 @@
       <span>任务总数: {{todos.length}}, 还有:{{remaining()}}未完成</span>
       [<a href="" ng-click="archive()">完成</a>]
       <ul>
-        <li ng-repeat="todo in todos">
-          <input type="checkbox" ng-model="todo.done">
-          <span ng-bind="todo.text"></span>
+        <li ng-repeat="todo in todos" class="row">
+          <div class="col-sm-2">
+            <input type="checkbox" ng-model="todo.done" ng-disabled='!todo.showing'>
+          </div>
+          <div class="col-sm-8">
+            <input class="form-control" ng-show="!todo.showing" ng-model="todo.text" ng-blur="changeFlag($index)">
+            <span ng-show="todo.showing" class="done-{{todo.done}}" ng-click="changeFlag($index)" ng-mouseover="tooltipWarning($index)" data-toggle="tooltip" data-placement="right" title="{{todo.warning}}">{{todo.text}}</span>
+          </div>
         </li>
       </ul>
 
@@ -57,6 +62,21 @@
       $http.get('todo.json').success(function(response){
         $scope.todos = response.todos;
       });
+      $scope.changeFlag = function(index){
+        //任务没有完成才能进行修改
+        if(!$scope.todos[index].done){
+          $scope.todos.forEach(function(ele, i){
+            //遍历数组中所有对象
+            //将非当前点击的对象的showing属性设置为true
+            //也就是全部都显示的是span状态
+            if (i != index) {
+              ele.showing = true;
+            }
+          });
+          //取反之后重新赋值
+          $scope.todos[index].showing = !$scope.todos[index].showing;
+        }
+      };
       $scope.remaining = function(){
         var count = 0;
         $scope.todos.forEach(function(ele){
@@ -65,12 +85,21 @@
         return $scope.todos.length-count;
       };
       $scope.archive = function(){
-        //to go on
-        //http://blog.csdn.net/ying422/article/details/45564245
+        $scope.todos = $scope.todos.filter(function(ele){
+          return !ele.done;
+        });
       };
       $scope.addToDo = function(){
-        $scope.todos.push({text:$scope.todoText,done:false});
+        $scope.todos.push({text:$scope.todoText,done:false,"showing":true,"warning":""});
         $scope.todoText = '';
+      };
+      $scope.tooltipWarning = function(index){
+        if($scope.todos[index].done){
+          $scope.todos[index].warning = "已经完成的任务不能修改";
+        }
+        else {
+          $scope.todos[index].warning = '';
+        }
       };
     }]);
   </script>

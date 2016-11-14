@@ -1,6 +1,6 @@
 {"todos" : [
-    {"text" : "切割图片", "done" : true},
-    {"text" : "编写页面代码", "done" : false},
-    {"text" : "编写js代码", "done" : false}
+    {"text" : "切割图片", "done" : true, "showing":true, "warning":""},
+    {"text" : "编写页面代码", "done" : false, "showing":true, "warning":""},
+    {"text" : "编写js代码", "done" : false, "showing":true, "warning":""}
   ]
 }
