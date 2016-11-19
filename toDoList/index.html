@@ -5,6 +5,9 @@
   <title>todolist</title>
   <link rel="stylesheet" href="../Bootstrap-3.3.0/css/bootstrap.css">
   <script src="../angular-1.4.1/angular.min.js"></script>
+  <!--angualr要在jQuery之前加载，否则快速刷新的情况下会有页面出现angular{{}}的情况-->
+  <script src="../jquery-3.1.1.min.js"></script>
+  <script src="../Bootstrap-3.3.0/js/bootstrap.min.js"></script>
   <style>
     #content{
       width: 400px;
@@ -38,7 +41,9 @@
           </div>
           <div class="col-sm-8">
             <input class="form-control" ng-show="!todo.showing" ng-model="todo.text" ng-blur="changeFlag($index)">
-            <span ng-show="todo.showing" class="done-{{todo.done}}" ng-click="changeFlag($index)" ng-mouseover="tooltipWarning($index)" data-toggle="tooltip" data-placement="right" title="{{todo.warning}}">{{todo.text}}</span>
+            <!--关于怎么在angularjs中启用Bootstrap的tooltip：
+                http://www.pixelstech.net/article/index.php?id=1463842972 -->
+            <span ng-show="todo.showing" class="done-{{todo.done}}" ng-click="changeFlag($index)" ng-mouseover="tooltipWarning($index)" data-toggle="tooltip" data-placement="right" title="{{todo.warning}}" tooltip>{{todo.text}}</span>
           </div>
         </li>
       </ul>
@@ -58,17 +63,20 @@
 
   <script>
     var app = angular.module('myApp', []);
-    app.controller('todoListCtrl', ['$scope', '$http', function($scope,$http){
-      $http.get('todo.json').success(function(response){
-        $scope.todos = response.todos;
-      });
+    app.controller('todoListCtrl', ['$scope', '$http', function($scope){
+      //从文本中读取数组虽然能实现效果，但是浏览器老是会报错，还是改回了直接在代码中定义数组
+      $scope.todos = [
+          {text:'切割图片',done:true,showing:true,warning:''},
+          {text:'编写页面代码',done:false,showing:true,warning:''},
+          {text:'编写js代码',done:false,showing:true,warning:''}
+      ];
       $scope.changeFlag = function(index){
         //任务没有完成才能进行修改
         if(!$scope.todos[index].done){
           $scope.todos.forEach(function(ele, i){
             //遍历数组中所有对象
-            //将非当前点击的对象的showing属性设置为true
-            //也就是全部都显示的是span状态
+            //将非当前点击的对象的showing属性设置为true，即显示span状态
+            //实现每次只能编辑一项
             if (i != index) {
               ele.showing = true;
             }
@@ -80,13 +88,13 @@
       $scope.remaining = function(){
         var count = 0;
         $scope.todos.forEach(function(ele){
-          count += ele.done?1:0;
+          count += ele.done ? 0 : 1;//值为false就+1
         });
-        return $scope.todos.length-count;
+        return count;
       };
       $scope.archive = function(){
         $scope.todos = $scope.todos.filter(function(ele){
-          return !ele.done;
+          return !ele.done;//返回ele.done为false的，即删除已完成的项
         });
       };
       $scope.addToDo = function(){
@@ -102,6 +110,23 @@
         }
       };
     }]);
+
+    //启用Bootstrap中的插件tooltip
+    $("[data-toggle='tooltip']").tooltip();
+    app.directive('tooltip', function(){
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs){
+                $(element).hover(function(){
+                    // on mouseenter
+                    $(element).tooltip('show');
+                }, function(){
+                    // on mouseleave
+                    $(element).tooltip('hide');
+                });
+            }
+        };
+    });
   </script>
 </body>
 </html>
