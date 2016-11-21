@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+    <head>
+        <meta charset="UTF-8">
+        <title>03 金额计算</title>
+        <script src="../angular-1.4.1/angular.min.js"></script>
+        <script src="../jquery-3.1.1.min.js"></script>
+    </head>
+    <body ng-controller="sum">
+        price:<input type="text" ng-model="cup.price" />
+        <br /><br />
+        count:<input type="text" ng-model="cup.count" />
+        <p>fee:{{cup.fee | currency:"￥"}}</p>
+        <p>sum:{{all() | currency:"￥"}}</p>
+
+        <script>
+            var app = angular.module('myApp', []);
+            app.controller('sum', function ($scope) {
+                $scope.cup = {
+                    "price" : 10,
+                    "count" : 30,
+                    "fee" : 8
+                };
+                $scope.all = function () {
+                    return $scope.cup.price*$scope.cup.count+$scope.cup.fee;
+                }
+
+                //$watch(): 监听变化,有三个参数: 1.函数或属性 2.callback 3.true深度监听
+                $scope.$watch("all()", function (nval, oval) {
+                    //console.log(nval+":"+oval);
+                    //nval是最新计算出的数据，oval是nval上一步的数据，初始数值相同
+                    nval<100 ? $scope.cup.fee=8 : $scope.cup.fee=0;
+                }, true);
+
+                $scope.$watch("cup.count", function (nval, oval) {
+                    //console.log(nval+":"+oval);
+                    if(nval<1){
+                        $scope.cup.fee = 0;
+                    }
+                }, true);
+            });
+        </script>
+    </body>
+</html>
