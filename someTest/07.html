@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>07 实现锚点楼层跳转</title>
+    <script src="../angular-1.4.1/angular.min.js"></script>
+    <style>
+        #wei div{
+            width: 100%;
+            height: 720px;
+            background: #2a6496;
+            color: #fff;
+            text-align: center;
+            line-height: 720px;
+            margin: 20px;
+            font-size: 80px;
+        }
+        #wei ul{
+            position: fixed;
+            top: 300px;
+            right: 60px;
+        }
+        #wei ul li{
+            width: 20px;
+            display: block;
+            height: 20px;
+            background: grey;
+            color: #fff;
+            text-align: center;
+            line-height: 20px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div ng-controller="show">
+        <div id="wei">
+            <div ng-repeat="attr in arr" ng-attr-id="div{{attr}}">{{attr}}</div>
+            <ul><!--定义右边的点-->
+                <li ng-repeat="attr in arr" ng-click="jump('div'+attr)">{{attr}}</li>
+            </ul>
+        </div>
+    </div>
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('show', ['$scope', '$location', '$anchorScroll', function ($scope, $location, $anchorScroll) {
+            $scope.arr = [1, 2, 3, 4, 5];
+            $scope.jump = function (id) {
+                //angularjs主要是用于制作单页面，即只有一个URL，主要通过路由来实现不同页面片段的加载
+                //location.hash()是用来设置页面的标识,即添加锚点
+                $location.hash(id);
+                $anchorScroll();//重新定义服务，解决滑动时点击锚点无作用的bug
+            }
+        }]);
+    </script>
+</body>
+</html>

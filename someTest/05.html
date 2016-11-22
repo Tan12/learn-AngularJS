@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>05 过滤器实现搜索与排序</title>
+    <script src="../angular-1.4.1/angular.min.js"></script>
+    <script src="../jquery-3.1.1.min.js"></script>
+</head>
+<body ng-controller="app">
+    <table>
+        <tr>
+            <td ng-click="sort('name')">name</td>
+            <td ng-click="sort('age')">age</td>
+        </tr>
+        <tr ng-repeat="arr in arr1">
+            <td>{{arr.name}}</td>
+            <td>{{arr.age}}</td>
+        </tr>
+    </table>
+    <input id="wei" type="text" ng-focus="concentrate()" />
+    <input type="button" ng-click="search()" value="search" />
+
+    <script>
+        var myApp = angular.module("myApp", []);
+        myApp.controller("app", ["$scope", "$filter", function($scope, $filter){
+            var arr=[
+                {"name":"猪","age":20},
+                {"name":"小猪","age":23},
+                {"name":"大猫","age":227},
+                {"name":"老虎","age":29},
+                {"name":"中虎","age":29},
+                {"name":"老虎","age":39},
+                {"name":"老猫","age":47},
+                {"name":"熊猫","age":29},
+                {"name":"树懒","age":27},
+                {"name":"狮子","age":59}
+            ];
+            $scope.arr1 = arr;
+            var isopen = true;
+
+            $scope.sort = function(str){
+                //不是很懂这种写法，也没有查到为什么
+                $scope.arr1 = $filter("orderBy")($scope.arr1, str, isopen);
+                isopen = !isopen;
+            };
+
+            $scope.concentrate = function(){
+                console.log("已聚焦");
+            };
+
+            $scope.search = function(){
+                $scope.arr1 = $filter("filter")(arr, document.getElementById("wei").value);
+            };
+        }]);
+    </script>
+</body>
+</html>

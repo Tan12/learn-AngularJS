@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>04 angularJS的工具方法</title>
+</head>
+<body>
+    <script src="../angular-1.4.1/angular.min.js"></script>
+    <script>
+        function A() {
+            this.name = "Tom";
+        }
+        function B() {
+            this.sex = "man";
+            this.age = 18;
+        }
+        var a = new A(),
+            b = new B();
+
+        //a继承b
+        angular.extend(a, b);
+        console.log(a);
+
+        console.log(angular.version);
+
+        var arr1 = [1, 2, 3],
+            arr2 = [1, 2, 3];
+        console.log(angular.equals(arr1, arr2));//true，angularJS返回的值为boolean
+        console.log(arr1===arr2);//false，因为数组的存储位置不同，即引用位置不同
+
+        var a = 1, b = 1;
+        console.log(angular.equals(a, b));//true
+        console.log(a===b);//true
+
+        var c = NaN, d = NaN;
+        console.log(angular.equals(c, d));//true
+        console.log(isNaN(c));//true
+        //为什么angularjs中的NaN会跟自己相等，NaN不是不跟任何数值相等的吗？
+        console.log(angular.equals(NaN,NaN));//true
+        console.log(NaN==NaN);//false
+        console.log(c===d);//false
+
+        //将字符串转化为json
+        var str = '{"name":"Lily","age":19,"sex":"female"}';
+        console.log(angular.fromJson(str));
+
+        //将json转化为字符串
+        var str2 = {"name":"Lily","age":19,"sex":"female"};
+        console.log(angular.toJson(str));
+
+    </script>
+</body>
+</html>

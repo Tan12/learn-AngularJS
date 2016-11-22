@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>06 实现tab切换</title>
+    <script src="../angular-1.4.1/angular.min.js"></script>
+    <script src="../jquery-3.1.1.min.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .box{
+            width:300px;
+            margin:20px auto;
+            height:200px;
+        }
+        #tab1 .first{
+            background: #f40;
+            color:#fff;
+        }
+        a{
+            display:inline-block;
+            width:75px;
+            height:25px;
+            line-height: 25px;
+            color:black;
+            text-decoration: none;
+            border:0px solid gray;
+            text-align: center;
+        }
+        #tab1 div{
+            width: 300px;
+            height: 200px;
+            border: 1px solid #ddd;
+            display: none;
+        }
+    </style>
+</head>
+<body ng-controller="show">
+    <div class="box">
+        <gr-tab gr-id="tab1" gr-data="data1"></gr-tab>
+        <!-- <gr-tab gr-id="tab1" gr-data="data1" ></gr-tab> -->
+    </div>
+    <script>
+        var app = angular.module("myApp", []);
+        app.directive("grTab", function () {
+            return{
+                restrict : "E", //定义标签属性
+                templateUrl : "06-tab.html",
+                replace : true, //把当前自定义的指令标签替换成引入的标签
+                scope : { //作用域隔离：每个作用域执行的是自己的功能
+                    grId : "@", //拿所有grID的字符串
+                    grData : "=" //拿所有grData属性的变量名
+                },
+                //原帖中是用的delegate()方法，但是我就算引进低版本，浏览器还是报错：delegate is not function
+                //我换成on()之后不管怎么试点击都没有用，可能是我没有抓到重点吧
+                //没办法，我只能直接用jQuery来实现这个效果，代码在最下面
+                //等我把angularjs再学得深入点说不定就解决了，现在很多东西还是一知半解
+                //原贴地址:http://blog.csdn.net/b1244154318/article/details/52613862
+                /*link : function (scope, element, attr) {//Dom操作
+                    element.on("click", function () {
+                        //为当前点击a标签添加first样式，其他同辈a标签移除first样式，即实现样式的切换
+                        $(this).addClass("first").siblings("a").removeClass("first");
+                        //显示与该a标签对应的div,隐藏其他div
+                        $(this).siblings("div").eq($(this).index()).css("display", "block").siblings("div").css("display", "none");
+                    });
+                }*/
+            };
+        });
+        app.controller("show", function ($scope) {
+           $scope.data1 = [
+               {'val':'aa','content':'hhhhhhh'},
+               {'val':'bb','content':'zzzzzzz'},
+               {'val':'cc','content':'wwwwwww'},
+               {'val':'dd','content':'bbbbbbb'}
+           ];
+        });
+        $(document).ready(function () {
+            $('a').on('click', function () {
+                //为当前点击a标签添加first样式，其他同辈a标签移除first样式，即实现样式的切换
+                $(this).addClass("first").siblings("a").removeClass("first");
+                //显示与该a标签对应的div,隐藏其他div
+                $(this).siblings("div").eq($(this).index()).css("display", "block").siblings("div").css("display", "none");
+            });
+        });
+    </script>
+</body>
+</html>

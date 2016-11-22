@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>08 实现百度的搜索接口及链接的实现</title>
+    <script src="../angular-1.4.1/angular.min.js"></script>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        #wei{
+            width: 500px;
+            height: 600px;
+            margin: 0 auto;
+            border: 0px solid gray;
+            font-size: 16px;
+        }
+        #wei input{
+            width: 476px;
+            height: 50px;
+            line-height: 50px;
+            padding-left: 20px;
+        }
+        #wei ul{
+            height: auto;
+            border: 1px solid #ccc;
+        }
+        #wei ul li{
+            width: 100%;
+            height: 30px;
+            line-height: 30px;
+            text-indent: 10px;
+            list-style: none;
+        }
+        #wei ul li a{
+            text-decoration: none;
+        }
+        #wei ul li:hover{
+            display: block;
+            background: #ccc;
+            color: #fff;
+        }
+    </style>
+</head>
+<body ng-controller="show">
+    <div id="wei">
+        <input type="text" ng-model="data" ng-keyup="change(data)" />
+        <ul>
+            <li ng-repeat="attr in arr"><a href="http://www.baidu.com/s?wd={{attr}}">{{attr}}</a></li>
+        </ul>
+    </div>
+
+    <script>
+        var app = angular.module('myApp', []);
+        app.controller('show', ['$scope', '$http', function ($scope, $http) {
+            $scope.arr = [];
+            console.log($scope.data);
+            $scope.change = function (data) {
+                //进行请求
+                $http({
+                    "method" : "jsonp",
+                    "url" : "https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd="+$scope.data+"&cb=JSON_CALLBACK"
+                    //回调函数必须为JSON_CALLBACK,百度默认的
+                }).success(function (res) {//数据请求成功时返回数据
+                    $scope.arr = res.s;
+                });
+            }
+        }]);
+    </script>
+</body>
+</html>

@@ -1,0 +1,6 @@
+<div id="{{grId}}">
+    <a href="javascript:;" ng-repeat="attr in grData" ng-class="{first:$first}">{{attr.val}}</a>
+    <div ng-repeat="attr in grData" ng-style="{display:$first?'block':'none'}">
+        <p>{{attr.content}}</p>
+    </div>
+</div>
