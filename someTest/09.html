@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>09 路由实现导航栏</title>
+    <script src="../angular-1.4.1/angular.min.js"></script>
+    <script src="../angular-1.4.1/angular-route.min.js"></script>
+    <style>
+        a{
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body ng-controller="show">
+    <div id="wei">
+        <a href="#main">首页</a>
+        <a href="#intro">简介</a>
+        <a href="#about">关于</a>
+        <a href="#contact">联系我们</a>
+    </div>
+    <div ng-view></div>
+
+    <script>
+        var app = angular.module('myApp', ['ngRoute']);
+        app.config(['$routeProvider', function ($routeProvider) {
+            $routeProvider
+                    .when('/main', {
+                        template : "<p>{{name}}</p>",
+                        controller : "show"
+                    })
+                    .when('/intro', {
+                        template : "<p>{{name}}</p>",
+                        controller : "show2"
+                    })
+                    .when('/about', {
+                        template : "<p>{{name}}</p>",
+                        controller : "show3"
+                    })
+                    .when('/contact', {
+                        template : "<p>{{name}}</p>",
+                        controller : "show4"
+                    })
+                    .otherwise("/main")
+        }]);
+
+        app.controller('show', ['$scope', '$http', function($scope, $http){
+            $scope.name = "hhh, this is index page.";
+        }]);
+        app.controller('show2', ['$scope', '$http', function($scope, $http){
+            $scope.name = "hhh, this is introduction page.";
+        }]);
+        app.controller('show3', ['$scope', '$http', function($scope, $http){
+            $scope.name = "hhh, this is about page.";
+        }]);
+        app.controller('show4', ['$scope', '$http', function($scope, $http){
+            $scope.name = "hhh, this is contact page.";
+        }]);
+    </script>
+</body>
+</html>
