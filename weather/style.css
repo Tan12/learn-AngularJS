@@ -9,9 +9,7 @@ h1, h2{
     line-height: 200%;
     color: #269abc
 }
-
-
-                       p{ line-height: 150%; }
+p{ line-height: 150%; }
 hr{
     border: 0;
     background-color: #ccc;

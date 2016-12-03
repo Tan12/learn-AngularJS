@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Wikipedia Search</title>
+    <link rel="stylesheet" href="../Bootstrap-3.3.0/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="../angular-1.4.1/angular.min.js"></script>
+    <script src="../angular-1.4.1/angular-animate.min.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="container" ng-controller="myCtrl">
+        <a href="http://en.wikipedia.org/wiki/Special:Random" target="_blank">点击这里随机阅读一篇文章</a>
+        <p><i class="glyphicon glyphicon-search"></i></p>
+        <form class="search">
+            <input type="text" name="text" ng-model="stext" />
+            <i class="glyphicon glyphicon-remove"></i>
+        </form>
+        <p>点击图标查询</p>
+
+        <ul class="reault">
+            <a ng-repeat="result in results" ng-href="{{result.page}}" target="_blank">
+                <li>
+                    <h2>{{result.title}}</h2>
+                    <p>{{result.body}}</p>
+                </li>
+            </a>
+        </ul>
+    </div>
+</body>
+</html>
