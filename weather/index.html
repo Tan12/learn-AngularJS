@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>weather</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="../angular-1.4.1/angular.min.js"></script>
+    <script src="script.js"></script>
+</head>
+<body>
+    <div class="container" ng-controller="weather">
+        <h1>聚合数据--天气应用</h1>
+        <hr />
+        <p>
+            <input type="text" name="cityname" ng-model="cityname" />
+            <input type="submit" name="search" value="查询" ng-click="search()" />
+        </p>
+        <div class="today hide">
+            <h2>
+                {{city}} | {{Data.today.weather}}
+                <small>
+                    {{Data.sk.wind_direction + Data.sk.wind_strength + '  ' + Data.sk.time}}
+                </small>
+            </h2>
+            <p>温度：{{Data.today.temperature}}</p>
+            <p>湿度：{{Data.sk.humidity}}</p>
+            <p>紫外线指数：{{Data.today.uv_index}}</p>
+            <p>穿衣指数：{{Data.today.dressing_advice}}</p>
+            <p>洗车指数：{{Data.today.wash_index}}</p>
+            <p>锻炼指数：{{Data.today.exercise_index}}</p>
+        </div>
+        <hr class="hide" />
+        <h2 class="hide">未来6天天气</h2>
+        <table class="future hide">
+            <tr ng-repeat="item in Items">
+                <td>{{item.week}}</td>
+                <td>{{item.date}}</td>
+                <td>{{item.weather}}</td>
+                <td>{{item.wind}}</td>
+                <td>{{item.temperature}}</td>
+            </tr>
+        </table>
+    </div>
+
+    <script src="../jquery-3.1.1.min.js"></script>
+</body>
+</html>
