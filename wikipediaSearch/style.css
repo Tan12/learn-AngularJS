@@ -9,6 +9,12 @@ body{
 }
 a{
     color: #fff;
+    outline: none;
+}
+a:link,
+a:visited,
+a:active,
+a:hover{
     text-decoration: none;
 }
 .container{
