@@ -1,10 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>$Title$</title>
+    <title>Pomodoro Timer</title>
+    <script src="../angular-1.4.1/angular.min.js"></script>
+    <script src="../jquery-3.1.1.min.js"></script>
+    <style>
+        body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, p, blockquote, table, th, td, embed, object {
+        padding: 0;
+        margin: 0;
+    }
+        body{
+            color: #fff;
+            height: 100%;
+            font-size: 16px;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            background-color: #333;
+        }
+        .container{
+            width: 960px;
+            margin: 0 auto;
+        }
+        h1{
+            text-align: center;
+            margin: 50px 0;
+        }
+        button{
+            color: #fff;
+            border: 0 none; /* 前面的0是针对ie6和ie7的兼容，后面的none是针对标准浏览器的 */
+            background-color: transparent;
+            outline: none;
+        }
+        .session{
+            display: flex;
+            justify-content: center;
+        }
+        .session p{
+            font-size: .8em;
+            line-height: 200%;
+            text-transform: uppercase;
+        }
+        .session span{
+            font-size: 2.5em;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        .breakCtrl, .sessionCtrl{
+            display: inline;
+            padding: 0 30px;
+            text-align: center;
+        }
+        .minus, .add{
+            font-size: 2em;
+            bottom: 0;
+        }
+        button, .timer{
+            cursor: pointer;
+        }
+        .timer{
+            width: 200px;
+            height: 200px;
+            border-radius: 200px;
+            border: 2px solid #99CC00;
+            margin: 20px auto;
+            text-align: center;
+            font-size: 3em;
+        }
+        .title{
+            margin-top: 20%;
+            margin-bottom: 10%;
+        }
+    </style>
 </head>
-<body>
-$END$
+<body ng-app="timerApp" ng-controller="timerCtrl">
+    <div class="container">
+        <h1>番茄钟</h1>
+
+        <div class="session">
+            <div class="breakCtrl">
+                <p>break length</p>
+                <button class="minus" ng-click="breakLengthChange(-1)">-</button>
+                <span>{{breakLength}}</span>
+                <button class="add" ng-click="breakLengthChange(1)">+</button>
+            </div>
+            <div class="sessionCtrl">
+                <p>session length</p>
+                <button class="minus" ng-click="sessionLengthChange(-1)">-</button>
+                <span>{{sessionLength}}</span>
+                <button class="add" ng-click="sessionLengthChange(1)">+</button>
+            </div>
+        </div>
+
+        <div class="timer">
+            <p class="title">{{sessionName}}</p>
+            <p>{{timeLeft}}</p>
+            <span class="fill"></span>
+        </div>
+    </div>
+
+    <script>
+        var app = angular.module('timerApp', []);
+        app.controller('timerCtrl', function ($scope) {
+            $scope.breakLength = 5;
+            $scope.sessionLength = 20;
+            $scope.sessionName = 'session';
+            $scope.timeLeft = $scope.sessionLength;
+
+            var runTimer = false;
+
+            $scope.breakLengthChange = function (num) {
+                if(!runTimer){
+                    if($scope.sessionName === 'break'){
+                        $scope.breakLength += num;
+                        if($scope.breakLength <= 0){
+                            $scope.breakLength = 1;
+                        }
+                        $scope.timeLeft = $scope.breakLength;
+                    }
+                }
+            };
+            $scope.sessionLengthChange = function (num) {
+                if(!runTimer){
+                    if($scope.sessionName === 'session'){
+                        $scope.sessionLength += num;
+                        if($scope.sessionLength <= 0){
+                            $scope.sessionLength = 1;
+                        }
+                        $scope.timeLeft = $scope.sessionLength;
+                    }
+                }
+            };
+            
+            function secondsToHms(time) {
+            };
+        });
+    </script>
 </body>
 </html>
