@@ -6,20 +6,20 @@
     <link rel="stylesheet" href="../Bootstrap-3.3.0/css/bootstrap.min.css" />
     <link rel="stylesheet" href="style.css" />
     <script src="../angular-1.4.1/angular.min.js"></script>
-    <script src="../angular-1.4.1/angular-animate.min.js"></script>
+    <script src="../jquery-3.1.1.min.js"></script>
     <script src="script.js"></script>
 </head>
 <body>
     <div class="container" ng-controller="myCtrl">
-        <a href="http://en.wikipedia.org/wiki/Special:Random" target="_blank"  onFocus="this.blur();">点击这里随机阅读一篇文章</a>
+        <a href="http://en.wikipedia.org/wiki/Special:Random" target="_blank">点击这里随机阅读一篇文章</a>
         <p><i class="glyphicon glyphicon-search"></i></p>
-        <form class="search">
-            <input type="text" name="text" ng-model="stext" />
+        <form class="search" ng-submit="search()">
+            <input type="text" name="text" ng-model="searchTxt" />
             <i class="glyphicon glyphicon-remove"></i>
         </form>
-        <p>点击图标查询</p>
+        <p class="help">点击图标查询</p>
 
-        <ul class="reault">
+        <ul class="result">
             <a ng-repeat="result in results" ng-href="{{result.page}}" target="_blank">
                 <li>
                     <h2>{{result.title}}</h2>

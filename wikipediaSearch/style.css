@@ -3,9 +3,13 @@ body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, 
     margin: 0;
 }
 body{
+    color: #fff;
+    font-size: 16px;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     background-color: #092b40;
-    color: #fff;
+}
+ul li{
+    list-style: none;
 }
 a{
     color: #fff;
@@ -25,13 +29,17 @@ a:hover{
 .search{
     display: none;
 }
+.search,
+.glyphicon-search{
+    margin: 30px 0;
+}
 .search input{
     width: 300px;
-    height: 40px;
+    height: 50px;
     padding: 10px;
     background-color: transparent;
-    border: 3px solid #d96f32;
-    border-radius: 50px;
+    border: 5px solid #d96f32;
+    border-radius: 60px;
     outline: none;
 }
 i{
@@ -42,5 +50,26 @@ i{
     font-size: 50px;
 }
 .glyphicon-remove{
-    margin-left: -30px;
+    margin-left: -35px;
+}
+.result{
+    text-align: left;
+}
+.result a{
+    color: #000;
+}
+.result li{
+    width: 90%;
+    height: auto;
+    border-left: 4px solid transparent;
+    padding: 20px 20px;
+    margin: 20px auto;
+    background-color: #fff;
+}
+.result li:hover{
+    border-left-color:#d96f32;
+}
+.result h2{
+    font-size: 20px;
+    margin-bottom: 20px;
 }
