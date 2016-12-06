@@ -44,7 +44,6 @@ app.controller('timerCtrl', function ($scope, $interval) {
 
     $scope.toggleTimer = function () {
         if(!runTimer){
-            $scope.currentLength = ($scope.currentName === 'session') ? $scope.sessionLength : $scope.breakLength;
             updateTimer();
             runTimer = $interval(updateTimer, 1000);
         }else {
@@ -60,14 +59,13 @@ app.controller('timerCtrl', function ($scope, $interval) {
             $scope.fillColor = '#333';
             if($scope.sessionName === 'session'){
                 $scope.sessionName = 'break';
-                $scope.currentLength = $scope.breakLength;
+                $scope.timeLeft = $scope.breakLength;
             }else {
                 $scope.sessionName = 'session';
-                $scope.currentLength = $scope.sessionLength;
+                $scope.timeLeft = $scope.sessionLength;
             }
-            $scope.timeLeft = $scope.currentLength;
-            seconds = 60 * $scope.currentLength;
-            $scope.originTime = $scope.currentLength;
+            seconds = 60 * $scope.timeLeft;
+            $scope.originTime = $scope.timeLeft;
         }else {
             if($scope.sessionName === 'break'){
                 $scope.fillColor = '#ff4444';
